@@ -203,7 +203,7 @@ class _CounterScreenState extends State<LoginScreen> {
                 try {
                   final response = await http
                       .get(Uri.parse(
-                          'http://192.168.1.116/APILEGAL/api/usuarios'))
+                          'http://192.168.1.116/APILEGAL2/api/usuarios'))
                       .timeout(const Duration(seconds: 10));
                   //.get(Uri.parse(
                   //  'http://192.168.0.54/APILEGAL/api/usuarios'))
@@ -218,7 +218,7 @@ class _CounterScreenState extends State<LoginScreen> {
                   //del objeto response.
 
                   //en resumen se obtiene en en la peticion http, en texto json y con json.decode(),
-                  //se convierte en una lista de objetos.
+                  //se convierte en una lista de objetos.|
                   //Si los datos no están vacios, se crea variable auxiliar foundUser, se inicializa en false
                   //para validar después si son validos los datos de ingresados
 
@@ -228,8 +228,8 @@ class _CounterScreenState extends State<LoginScreen> {
                   for (var item in data) {
                     //es una forma rápida de hacer un recorrido en los datos de
                     //una lista, en este caso los items son los campos 'usuario' y 'contraseña' que están en
-                    if (item['usuario'] == user &&
-                        item['contraseña'] == password) {
+                    if (item['USUARIO'] == user &&
+                        item['PASSWORD'] == password) {
                       //guarda los datos del user en shared preferences para usarlos posteriormente
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setString('user', user);
