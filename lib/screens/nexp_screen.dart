@@ -71,7 +71,7 @@ class _NExpScreenState extends State<NExpScreen> {
   @override
   void initState() {
     super.initState();
-    _getData('http://192.168.1.116/APILEGAL/api/grupo', 'grupo');
+    _getData('http://192.168.1.116/APILEGAL2/api/grupo', 'grupo');
     _getData('http://192.168.1.116/APILEGAL/api/abogado', 'abogado');
     _getData('http://192.168.1.116/APILEGAL/api/distritojudicial',
         'distritoJudicial');
@@ -413,8 +413,8 @@ class _NExpScreenState extends State<NExpScreen> {
                           // value es el valor seleccionado y se toma de la clave 'nombre' del mapa
                           // child es el contenido de la opción en el menú y también se toma de la clave 'nombre' del mapa
                           return DropdownMenuItem(
-                            value: gruponame['nombre'], //valor seleccionado
-                            child: Text(gruponame['nombre']), //se muestra lista
+                            value: gruponame['NOMBRE_GRUPO'], //valor seleccionado
+                            child: Text(gruponame['NOMBRE_GRUPO']), //se muestra lista
                           );
                         }).toList(), //se agrega/convierte a lista para poder seleccionares
                         onChanged: (value) {
@@ -980,36 +980,50 @@ class _NExpScreenState extends State<NExpScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 60,
-                      child: DropdownButtonFormField(
-                        items: _autoridades.map((autoridadesname) {
-                          return DropdownMenuItem(
-                            value: autoridadesname['nombre'],
-                            child: Text(autoridadesname['nombre']),
-                          );
-                        }).toList(), //se agrega/convierte a lista para poder seleccionares
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedAutoridades = value as String;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                            labelText: 'Autoridades',
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                              color: Color(0xFF48B461),
-                              width: 1,
-                            )),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF48B461),
-                                width: 1,
-                              ),
-                            )),
-                      ),
-                    ),
-                  ),
+  child: SizedBox(
+    height: 60,
+    child: DropdownButtonFormField(
+      items: _autoridades.map((autoridadesname) {
+        return DropdownMenuItem(
+          value: autoridadesname['nombre'],
+          child: Row(
+            children: [
+              Checkbox(
+                value: _selectedAutoridades == autoridadesname['nombre'],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedAutoridades = autoridadesname['nombre'];
+                  });
+                },
+              ),
+              Text(autoridadesname['nombre']),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          _selectedAutoridades = value as String;
+        });
+      },
+      decoration: const InputDecoration(
+        labelText: 'Autoridades',
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF48B461),
+            width: 1,
+          ),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF48B461),
+            width: 1,
+          ),
+        ),
+      ),
+    ),
+  ),
+),
                   const SizedBox(width: 50),
                   Expanded(
                     child: SizedBox(
